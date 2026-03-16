@@ -4,7 +4,7 @@ function format(num){
 }
 
 function calculate() {
-
+console.log(balanceInput, dailyInput, yearlyInput);
   const APY = 0.10;
   const DAYS = 365;
   const dailyRate = APY / DAYS;
@@ -89,7 +89,7 @@ function calculate() {
 }
 
   if(!balanceInput && !dailyInput && !yearlyInput){
-    output = "Enter a bank balance, a desired daily deposit, or both.";
+    output = "Enter a bank balance, a desired deposit, or both.";
   }
 
   document.getElementById("output").innerHTML = output;
