@@ -1,0 +1,85 @@
+    body {,
+        font-family: "Times New Roman", serif;
+        background: black url(https://media.xanje.com/themes/dark/background.png);
+        color: #b8b8b8;
+        padding: 20px;
+        max-width: 800px;
+        margin: auto;
+    }
+    hr {
+        background: url(https://64.media.tumblr.com/3a8d46bc9b57b88635bf6c59ab115b2f/f6f0cf0e0901b6dd-ca/s400x600/37e660e49e362f3611d3dbedbc79f95d2b7f37f2.gif) center no-repeat;
+        border: none;
+        height: 1px;
+        background-size: 100%;
+        box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    }
+    h1 { 
+        text-align: center;
+        color: #b8b8b8;
+    }
+    h4 {
+        text-align: center;
+        color: #b8b8b8;
+    }
+    .box {
+        background: #171717;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+    .market-grid {
+        display: flex;
+        gap: 1rem; /* space between the labels */
+        flex-wrap: wrap; /* optional, wraps if the screen is too narrow */
+    }
+    .market-grid label {
+        display: flex;
+        flex-direction: column; /* keeps the text above the input */
+    }
+    label { display: block; margin-top: 10px; }
+    input, select {
+        background: #15212a;
+        color: #c5c5c5;
+        padding: 6px;
+        margin-top: 3px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+    }
+    .extras-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-top: 10px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        font-size: 18px;
+        background: #15212a;
+        color: #b8b8b8;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    button:hover { background: #15212a; }
+    pre {
+        background: #15212a;
+        padding: 15px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+    }
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .details-grid .full {
+        grid-column: 1 / -1;
+}
+    .details-row-3 {
+        display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       gap: 12px;
+}
