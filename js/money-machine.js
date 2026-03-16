@@ -39,15 +39,28 @@ function calculate() {
     const yearBal = balanceAfterDays(balanceInput, 365);
     const fiveYearBal = balanceAfterDays(balanceInput, 365*5);
 
-    output += "<b>From Current Bank Balance</b><br>";
-    output += "Daily deposit now: " + format(currentDaily) + " coins<br><br>";
+    // Table for future daily deposit and balance
+    output += "<b>Future projections from current bank balance:</b><br>";
+    output += "<table border='1' cellpadding='5' cellspacing='0'>";
+    output += "<tr><th>Timeframe</th><th>1 Week</th><th>1 Month</th><th>1 Year</th><th>5 Years</th></tr>";
 
-    output += "If untouched:<br>";
-    output += "1 week daily deposit: " + format(dailyInterest(weekBal)) + " coins<br>";
-    output += "1 month daily deposit: " + format(dailyInterest(monthBal)) + " coins<br>";
-    output += "1 year daily deposit: " + format(dailyInterest(yearBal)) + " coins<br>";
-    output += "5 years daily deposit: " + format(dailyInterest(fiveYearBal)) + " coins<br><br>";
+    // Row for daily deposit
+    output += "<tr><td>Daily Deposit</td>";
+    output += "<td>" + format(dailyInterest(weekBal)) + "</td>";
+    output += "<td>" + format(dailyInterest(monthBal)) + "</td>";
+    output += "<td>" + format(dailyInterest(yearBal)) + "</td>";
+    output += "<td>" + format(dailyInterest(fiveYearBal)) + "</td>";
+    output += "</tr>";
 
+    // Row for bank balance
+    output += "<tr><td>Bank Balance</td>";
+    output += "<td>" + format(weekBal) + "</td>";
+    output += "<td>" + format(monthBal) + "</td>";
+    output += "<td>" + format(yearBal) + "</td>";
+    output += "<td>" + format(fiveYearBal) + "</td>";
+    output += "</tr>";
+
+    output += "</table><br>";
   }
 
   if(dailyInput){
