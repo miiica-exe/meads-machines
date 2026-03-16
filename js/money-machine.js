@@ -4,7 +4,7 @@ function format(num){
 }
 
 function calculate() {
-console.log(balanceInput, dailyInput, yearlyInput);
+
   const APY = 0.10;
   const DAYS = 365;
   const dailyRate = APY / DAYS;
@@ -12,7 +12,7 @@ console.log(balanceInput, dailyInput, yearlyInput);
   const balanceInput = Number(document.getElementById("balance").value);
   const dailyInput = Number(document.getElementById("daily").value);
   const yearlyInput = Number(document.getElementById("yearly").value);
-
+console.log(balanceInput, dailyInput, yearlyInput);
   let output = "";
 
   function dailyInterest(balance){
