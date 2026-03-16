@@ -100,3 +100,10 @@
        grid-template-columns: repeat(3, 1fr);
        gap: 12px;
 }
+table {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 5px;
+    width: 75%;
+    text-align: right;
+}
