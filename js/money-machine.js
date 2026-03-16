@@ -11,6 +11,7 @@ function calculate() {
 
   const balanceInput = Number(document.getElementById("balance").value);
   const dailyInput = Number(document.getElementById("daily").value);
+  const yearlyInput = Number(document.getElementById("yearly").value);
 
   let output = "";
 
@@ -29,7 +30,11 @@ function calculate() {
   function requiredBalanceForDaily(daily){
     return daily / dailyRate;
   }
-
+  
+  function requiredBalanceForYearly(yearly){
+    return yearly / APY;
+  }
+  
   if(balanceInput){
 
     const currentDaily = dailyInterest(balanceInput);
@@ -73,7 +78,17 @@ function calculate() {
 
   }
 
-  if(!balanceInput && !dailyInput){
+  if(yearlyInput){
+
+  const neededBalanceYearly = requiredBalanceForYearly(yearlyInput);
+
+  output += "<b>Required Balance for Desired Yearly Deposit</b><br>";
+  output += "To earn " + format(yearlyInput) + " coins per year, you need about ";
+  output += format(neededBalanceYearly) + " coins in the bank.<br>";
+
+}
+
+  if(!balanceInput && !dailyInput && !yearlyInput){
     output = "Enter a bank balance, a desired daily deposit, or both.";
   }
 
