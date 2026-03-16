@@ -100,10 +100,13 @@
        grid-template-columns: repeat(3, 1fr);
        gap: 12px;
 }
-table {
+#output table {
     width: 100%
 }
 tbody {
     width: 75%;
     text-align: right;
+}
+th, td {
+    padding: 5px;
 }
