@@ -4,7 +4,6 @@ function format(num){
 }
 
 function calculate() {
-
   const APY = 0.10;
   const DAYS = 365;
   const dailyRate = APY / DAYS;
