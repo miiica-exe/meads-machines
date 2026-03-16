@@ -101,7 +101,9 @@
        gap: 12px;
 }
 #output table {
-    width: 100%
+  width: 100%;            /* Fill the parent div */
+  table-layout: fixed;    /* Force columns to distribute evenly */
+  border-collapse: collapse;
 }
 tbody {
     width: 75%;
