@@ -37,10 +37,12 @@
       margin: 0 10px;
       text-decoration: none;
       font-weight: bold;
+      color: #b8b8b8;
     }
 
     .topnav a:hover {
       text-decoration: underline;
+      color: #b8b8b8;
     }
     .market-grid {
         display: flex;
