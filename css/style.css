@@ -112,3 +112,10 @@ tbody {
 th, td {
     padding: 5px;
 }
+/* First column labels left-aligned and only as wide as content */
+#output td:first-child,
+#output th:first-child {
+  text-align: left;
+  font-weight: bold;
+  width: 1%;       /* Shrinks to fit content */
+}
