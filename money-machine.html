@@ -17,6 +17,7 @@
 <h1>Money Machine</h1>
   <div class="box">
     <h2>Daily Interest Calculator</h2>
+    <h4>Fill out one or all fields</h4>
   
 <form onsubmit="event.preventDefault(); calculate();">
   <label>Current Bank Balance:</label><br>
@@ -24,6 +25,9 @@
 
   <label>Desired Daily Deposit:</label><br>
   <input type="number" id="daily" placeholder="coins wanted per day"><br><br>
+
+  <label>Desired Yearly Deposit:</label><br>
+  <input type="number" id="yearly" placeholder="coins wanted per year"><br><br>
 
   <button type="submit">Calculate</button>
 </form>
