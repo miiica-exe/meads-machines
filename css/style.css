@@ -115,6 +115,6 @@ th, td {
 #output td:first-child, #output th:first-child {
   text-align: left;
   font-weight: bold;
-  width: max-content;       /* Shrinks to fit content */
-  white-space: nowrap;      /* Prevent text from wrapping */
+  white-space: nowrap;
+  width: 1%;
 }
