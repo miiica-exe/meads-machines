@@ -1,4 +1,3 @@
-
 function format(num){
   return Math.round(num).toLocaleString();
 }
