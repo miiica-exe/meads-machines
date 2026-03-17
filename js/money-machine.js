@@ -121,8 +121,11 @@ function calculate() {
   output += format(neededBalanceYearly) + " coins in the bank.<br>";
 
 }
+  if(!balanceInput && !dailyInput && !yearlyInput){
+    output = "Enter a bank balance, a desired deposit, or both.";
+  }
 
-    // TIME TO GOAL (only if balance + goal provided)
+    // TIME TO GOAL)
 if(balanceInput && dailyInput){
 
   const targetBalance = requiredBalanceForDaily(dailyInput);
@@ -152,9 +155,6 @@ if(balanceInput && yearlyInput){
   output += years + " years, " + monthsDecimal + " months ";
   output += "to reach your yearly deposit goal.<br>";
 }
-  if(!balanceInput && !dailyInput && !yearlyInput){
-    output = "Enter a bank balance, a desired deposit, or both.";
-  }
 
   document.getElementById("output").innerHTML = output;
 
