@@ -1,6 +1,40 @@
 function format(num){
   return Math.round(num).toLocaleString();
 }
+function daysToReachBalance(startBalance, targetBalance){
+  const APY = 0.10;
+  const DAYS = 365;
+  const dailyRate = APY / DAYS;
+
+  function dailyInterest(balance){
+    if (balance < 5000) return 0;
+    return balance * dailyRate;
+  }
+
+  let balance = startBalance;
+  let days = 0;
+
+  // Prevent infinite loops if unreachable
+  while(balance < targetBalance && days < 100 * 365){
+    balance += dailyInterest(balance);
+    days++;
+  }
+
+  return days;
+}
+
+function formatTime(days){
+  const years = Math.floor(days / 365);
+  days %= 365;
+
+  const months = Math.floor(days / 30);
+  days %= 30;
+
+  const weeks = Math.floor(days / 7);
+  days %= 7;
+
+  return { years, months, weeks, days };
+}
 
 function calculate() {
   const APY = 0.10;
@@ -17,6 +51,7 @@ function calculate() {
 
   function dailyInterest(balance){
     if (balance < 5000) return 0;
+    output += "<br><i>Note: No interest is earned below 5,000 coins, so this goal cannot be reached.</i><br>";
     return balance * dailyRate;
   }
 
@@ -34,7 +69,36 @@ function calculate() {
   function requiredBalanceForYearly(yearly){
     return yearly / APY;
   }
-  
+  // TIME TO GOAL (only if balance + goal provided)
+if(balanceInput && dailyInput){
+
+  const targetBalance = requiredBalanceForDaily(dailyInput);
+  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
+  const t = formatTime(daysNeeded);
+
+  output += "<br><b>Time to Reach Daily Deposit Goal</b><br>";
+  output += "If left untouched, it will take ";
+  output += t.years + " years, " + t.months + " months, ";
+  output += t.weeks + " weeks, " + t.days + " days ";
+  output += "to reach your daily deposit goal.<br>";
+}
+
+if(balanceInput && yearlyInput){
+
+  const targetBalance = requiredBalanceForYearly(yearlyInput);
+  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
+
+  const years = Math.floor(daysNeeded / 365);
+  const remainingDays = daysNeeded % 365;
+
+  // months with decimals (optional as requested)
+  const monthsDecimal = Math.round((remainingDays / 30) * 10) / 10;
+
+  output += "<br><b>Time to Reach Yearly Deposit Goal</b><br>";
+  output += "If left untouched, it will take approximately ";
+  output += years + " years, " + monthsDecimal + " months ";
+  output += "to reach your yearly deposit goal.<br>";
+}
   if(balanceInput){
 
     const currentDaily = dailyInterest(balanceInput);
