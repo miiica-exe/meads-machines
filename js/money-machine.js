@@ -51,7 +51,6 @@ function calculate() {
 
   function dailyInterest(balance){
     if (balance < 5000) return 0;
-    output += "<br><i>Note: No interest is earned below 5,000 coins, so this goal cannot be reached.</i><br>";
     return balance * dailyRate;
   }
 
