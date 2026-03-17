@@ -68,36 +68,7 @@ function calculate() {
   function requiredBalanceForYearly(yearly){
     return yearly / APY;
   }
-  // TIME TO GOAL (only if balance + goal provided)
-if(balanceInput && dailyInput){
 
-  const targetBalance = requiredBalanceForDaily(dailyInput);
-  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
-  const t = formatTime(daysNeeded);
-
-  output += "<br><b>Time to Reach Daily Deposit Goal</b><br>";
-  output += "If left untouched, it will take ";
-  output += t.years + " years, " + t.months + " months, ";
-  output += t.weeks + " weeks, " + t.days + " days ";
-  output += "to reach your daily deposit goal.<br>";
-}
-
-if(balanceInput && yearlyInput){
-
-  const targetBalance = requiredBalanceForYearly(yearlyInput);
-  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
-
-  const years = Math.floor(daysNeeded / 365);
-  const remainingDays = daysNeeded % 365;
-
-  // months with decimals (optional as requested)
-  const monthsDecimal = Math.round((remainingDays / 30) * 10) / 10;
-
-  output += "<br><b>Time to Reach Yearly Deposit Goal</b><br>";
-  output += "If left untouched, it will take approximately ";
-  output += years + " years, " + monthsDecimal + " months ";
-  output += "to reach your yearly deposit goal.<br>";
-}
   if(balanceInput){
 
     const currentDaily = dailyInterest(balanceInput);
@@ -151,6 +122,36 @@ if(balanceInput && yearlyInput){
 
 }
 
+    // TIME TO GOAL (only if balance + goal provided)
+if(balanceInput && dailyInput){
+
+  const targetBalance = requiredBalanceForDaily(dailyInput);
+  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
+  const t = formatTime(daysNeeded);
+
+  output += "<br><b>Time to Reach Daily Deposit Goal</b><br>";
+  output += "If left untouched, it will take ";
+  output += t.years + " years, " + t.months + " months, ";
+  output += t.weeks + " weeks, " + t.days + " days ";
+  output += "to reach your daily deposit goal.<br>";
+}
+
+if(balanceInput && yearlyInput){
+
+  const targetBalance = requiredBalanceForYearly(yearlyInput);
+  const daysNeeded = daysToReachBalance(balanceInput, targetBalance);
+
+  const years = Math.floor(daysNeeded / 365);
+  const remainingDays = daysNeeded % 365;
+
+  // months with decimals (optional as requested)
+  const monthsDecimal = Math.round((remainingDays / 30) * 10) / 10;
+
+  output += "<br><b>Time to Reach Yearly Deposit Goal</b><br>";
+  output += "If left untouched, it will take approximately ";
+  output += years + " years, " + monthsDecimal + " months ";
+  output += "to reach your yearly deposit goal.<br>";
+}
   if(!balanceInput && !dailyInput && !yearlyInput){
     output = "Enter a bank balance, a desired deposit, or both.";
   }
