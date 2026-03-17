@@ -108,7 +108,7 @@ function calculate() {
 
     output += "<b>Required Balance for Desired Daily Deposit</b><br>";
     output += "To earn " + format(dailyInput) + " coins daily, you need about ";
-    output += format(neededBalance) + " coins in the bank.<br>";
+    output += format(neededBalance) + " coins in the bank.<br><br>";
 
   }
 
