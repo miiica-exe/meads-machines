@@ -129,11 +129,12 @@ function getPopulationModifier(generation, population, extras) {
     let modifier;
 
     if (population < 11) modifier = 1.40;
-    else if (population <= 151) modifier = 1.20;
-    else if (population <= 1001) modifier = 1.15;
-    else if (population <= 10001) modifier = 1.05;
-    else if (population <= 100001) modifier = 1.005;
-    else modifier = 0.95;
+    else if (population <= 1000) modifier = 1.20;
+    else if (population <= 3000) modifier = 1.15;
+    else if (population <= 5000) modifier = 1.05;
+    else if (population <= 8000) modifier = 1.005;
+    else if (population <= 20000) modifier = 0.95;
+    else modifier = 0.9;
 
     if (generation > 1 && !extras.includes("BreedOnly")) {
         modifier = 1 + ((modifier - 1) * -0.55);
