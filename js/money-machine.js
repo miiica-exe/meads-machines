@@ -81,7 +81,7 @@ function calculate() {
   function checkCaps(value){
     if(value >= MAX_CAP){
       notices += "<br><b>⚠ Maximum Cap Reached</b><br>";
-      notices += "The bank cannot exceed 4,250,000,000 coins. Any extra coins may be lost.<br>";
+      notices += "An account cannot exceed 4,250,000,000 coins. Any extra coins may be lost.<br>";
     }
     else if(value >= WARNING_CAP){
       notices += "<br><b>⚠ Warning Threshold Reached</b><br>";
