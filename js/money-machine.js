@@ -80,11 +80,11 @@ function calculate() {
 
   function checkCaps(value){
     if(value >= MAX_CAP){
-      notices += "<br><b>⚠ Maximum Cap Reached</b><br>";
+      notices += "<br><b>⚠ Your goal meets or exceeds the maximum</b><br>";
       notices += "An account cannot exceed 4,250,000,000 coins. Any extra coins may be lost.<br>";
     }
     else if(value >= WARNING_CAP){
-      notices += "<br><b>⚠ Warning Threshold Reached</b><br>";
+      notices += "<br><b>⚠ Your goal is near the maximum</b><br>";
       notices += "At 3,750,000,000 coins, you will no longer be able to receive coins from other players.<br>";
     }
   }
@@ -92,24 +92,21 @@ function calculate() {
   // 📊 Future projections
   if(balanceInput){
 
-    const weekBal = balanceAfterDays(balanceInput, 7);
     const monthBal = balanceAfterDays(balanceInput, 30);
     const yearBal = balanceAfterDays(balanceInput, 365);
     const fiveYearBal = balanceAfterDays(balanceInput, 365*5);
 
     output += "<b>Future projections from current bank balance:</b><br>";
     output += "<table border='1' cellpadding='5' cellspacing='0'>";
-    output += "<tr><th>Timeframe</th><th>1 Week</th><th>1 Month</th><th>1 Year</th><th>5 Years</th></tr>";
+    output += "<tr><th>Timeframe</th><th>1 Month</th><th>1 Year</th><th>5 Years</th></tr>";
 
     output += "<tr><td>Daily Deposit</td>";
-    output += "<td>" + format(dailyInterest(weekBal)) + "</td>";
     output += "<td>" + format(dailyInterest(monthBal)) + "</td>";
     output += "<td>" + format(dailyInterest(yearBal)) + "</td>";
     output += "<td>" + format(dailyInterest(fiveYearBal)) + "</td>";
     output += "</tr>";
 
     output += "<tr><td>Bank Balance</td>";
-    output += "<td>" + format(weekBal) + "</td>";
     output += "<td>" + format(monthBal) + "</td>";
     output += "<td>" + format(yearBal) + "</td>";
     output += "<td>" + format(fiveYearBal) + "</td>";
@@ -118,7 +115,6 @@ function calculate() {
     output += "</table><br>";
 
     // Check projections for caps
-    checkCaps(weekBal);
     checkCaps(monthBal);
     checkCaps(yearBal);
     checkCaps(fiveYearBal);
@@ -168,10 +164,3 @@ function calculate() {
 
   document.getElementById("output").innerHTML = output + notices;
 }
-
-I want to add one more column that appears if they input a goal, on the far right
-if they input a goal balance, it shows info for that balance
-if they put in desired daily, it calculates everything for that goal
-if they put in both, use only goal balance(in case they put in different)
-
-Remove the one week column
