@@ -89,19 +89,6 @@ function calculate() {
     }
   }
 
-  // 📊 Future projections
-  if(balanceInput){
-
-    const monthBal = balanceAfterDays(balanceInput, 30);
-    const yearBal = balanceAfterDays(balanceInput, 365);
-    const fiveYearBal = balanceAfterDays(balanceInput, 365*5);
-
-    // Check projections for caps
-    checkCaps(monthBal);
-    checkCaps(yearBal);
-    checkCaps(fiveYearBal);
-  }
-
   // 💰 Required balance for daily
   if(dailyInput){
 
