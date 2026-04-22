@@ -133,7 +133,7 @@ function calculate() {
     const oneYear = balanceAfterDays(balanceInput, 365);
     const fiveYears = balanceAfterDays(balanceInput, 365 * 5);
 
-    output += "<br><b>Projected Growth Timeline (No deposits, no goals)</b><br>";
+    output += "<br><b>Bank balance growth, if left untouched....</b><br>";
 
     output += "After 1 month: " + format(oneMonth) + " coins<br>";
     output += "After 1 year: " + format(oneYear) + " coins<br>";
