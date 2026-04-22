@@ -121,10 +121,10 @@ function calculate() {
     }
 
     if(result.capped){
-      output += "You hit max cap before reaching goal.<br>";
+      output += "You will hit max cap before reaching goal.<br>";
     }
 
-    output += `Time: ${t.years}y ${t.months}m ${t.weeks}w ${t.days}d<br>`;
+    output += `You willreach your goal in: ${t.years} years, ${t.months} months, ${t.weeks} weeks, ${t.days} days.<br>`;
 
     checkCaps(goalInput);
   }
@@ -136,7 +136,7 @@ function calculate() {
     const oneYear = balanceAfterDays(balanceInput, 365);
     const fiveYears = balanceAfterDays(balanceInput, 365 * 5);
 
-    output += "<br><b>Projected Growth (with contributions)</b><br>";
+    output += "<br><b>Projected Growth</b><br>";
 
     output += "1 Month: " + format(oneMonth) + "<br>";
     output += "1 Year: " + format(oneYear) + "<br>";
