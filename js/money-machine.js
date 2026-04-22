@@ -89,43 +89,76 @@ function calculate() {
     }
   }
 
-  // 📊 Future projections
+  // =========================
+  // BASE PROJECTIONS
+  // =========================
   if(balanceInput){
 
-    const weekBal = balanceAfterDays(balanceInput, 7);
     const monthBal = balanceAfterDays(balanceInput, 30);
     const yearBal = balanceAfterDays(balanceInput, 365);
-    const fiveYearBal = balanceAfterDays(balanceInput, 365*5);
+    const fiveYearBal = balanceAfterDays(balanceInput, 365 * 5);
 
     output += "<b>Future projections from current bank balance:</b><br>";
     output += "<table border='1' cellpadding='5' cellspacing='0'>";
-    output += "<tr><th>Timeframe</th><th>1 Week</th><th>1 Month</th><th>1 Year</th><th>5 Years</th></tr>";
 
+    output += "<tr>";
+    output += "<th>Timeframe</th>";
+    output += "<th>in 1 Month</th>";
+    output += "<th>in 1 Year</th>";
+    output += "<th>in 5 Years</th>";
+
+    const hasGoal = !!goalInput || !!dailyInput;
+    if (hasGoal) output += "<th>Goal</th>";
+
+    output += "</tr>";
+
+    // -------------------------
+    // BASE ROW
+    // -------------------------
     output += "<tr><td>Daily Deposit</td>";
-    output += "<td>" + format(dailyInterest(weekBal)) + "</td>";
+
     output += "<td>" + format(dailyInterest(monthBal)) + "</td>";
     output += "<td>" + format(dailyInterest(yearBal)) + "</td>";
     output += "<td>" + format(dailyInterest(fiveYearBal)) + "</td>";
-    output += "</tr>";
 
-    output += "<tr><td>Bank Balance</td>";
-    output += "<td>" + format(weekBal) + "</td>";
-    output += "<td>" + format(monthBal) + "</td>";
-    output += "<td>" + format(yearBal) + "</td>";
-    output += "<td>" + format(fiveYearBal) + "</td>";
-    output += "</tr>";
+    // -------------------------
+    // GOAL COLUMN LOGIC
+    // -------------------------
+    if (hasGoal) {
 
+      const effectiveGoal = goalInput > 0
+        ? goalInput
+        : requiredBalanceForDaily(dailyInput);
+
+      const goalMonth = balanceAfterDays(effectiveGoal, 30);
+      const goalYear = balanceAfterDays(effectiveGoal, 365);
+      const goalFive = balanceAfterDays(effectiveGoal, 365 * 5);
+
+      const goalDaily = dailyInterest(effectiveGoal);
+
+      output += "<td>";
+      output += "Start: " + format(effectiveGoal) + "<br>";
+      output += "Daily: " + format(goalDaily) + "<br>";
+      output += "1M: " + format(goalMonth) + "<br>";
+      output += "1Y: " + format(goalYear) + "<br>";
+      output += "5Y: " + format(goalFive);
+      output += "</td>";
+
+      checkCaps(effectiveGoal);
+    }
+
+    output += "</tr>";
     output += "</table><br>";
 
-    // Check projections for caps
-    checkCaps(weekBal);
     checkCaps(monthBal);
     checkCaps(yearBal);
     checkCaps(fiveYearBal);
   }
 
-  // 💰 Required balance for daily
-  if(dailyInput){
+  // =========================
+  // DAILY REQUIREMENT ONLY
+  // =========================
+  if(dailyInput && !goalInput){
 
     const neededBalance = requiredBalanceForDaily(dailyInput);
 
@@ -136,7 +169,9 @@ function calculate() {
     checkCaps(neededBalance);
   }
 
-  // 🎯 Time to goal balance
+  // =========================
+  // TIME TO GOAL
+  // =========================
   if(balanceInput && goalInput){
 
     const targetBalance = Math.min(goalInput, MAX_CAP);
