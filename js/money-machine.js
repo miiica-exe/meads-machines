@@ -126,7 +126,22 @@ function calculate() {
 
     checkCaps(goalInput);
   }
+  // 📈 Timeline projection (ONLY current balance provided)
+  if (balanceInput && !dailyInput && !goalInput) {
 
+    const oneMonth = balanceAfterDays(balanceInput, 30);
+    const oneYear = balanceAfterDays(balanceInput, 365);
+    const fiveYears = balanceAfterDays(balanceInput, 365 * 5);
+
+    output += "<br><b>Projected Growth Timeline (No deposits, no goals)</b><br>";
+
+    output += "After 1 month: " + format(oneMonth) + " coins<br>";
+    output += "After 1 year: " + format(oneYear) + " coins<br>";
+    output += "After 5 years: " + format(fiveYears) + " coins<br><br>";
+
+    checkCaps(fiveYears);
+  }
+  
   if(!balanceInput && !dailyInput && !goalInput){
     output = "Enter a bank balance, a desired deposit, or a goal balance.";
   }
