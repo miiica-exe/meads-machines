@@ -34,7 +34,7 @@ const headerEl = document.getElementById("headerColor");
 const mainEl = document.getElementById("mainBoxColor");
 const toolbarEl = document.getElementById("toolbarTextColor");
 
-const output = document.getElementById("output");
+const output = document.getElementById("cssOutput");
 
 document.getElementById("generateBtn").addEventListener("click", () => {
 
@@ -46,10 +46,11 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
     let ok = true;
 
-    ok &= validate(bgColor, document.getElementById("bgColorError"), "Background");
-    ok &= validate(header, document.getElementById("headerColorError"), "Header");
-    ok &= validate(main, document.getElementById("mainBoxColorError"), "Main box");
-    ok &= validate(toolbar, document.getElementById("toolbarTextColorError"), "Toolbar");
+    ok =
+    validate(bgColor, document.getElementById("bgColorError"), "Background") &&
+    validate(header, document.getElementById("headerColorError"), "Header") &&
+    validate(main, document.getElementById("mainBoxColorError"), "Main box") &&
+    validate(toolbar, document.getElementById("toolbarTextColorError"), "Toolbar");
 
     if (!ok) return;
 
@@ -96,9 +97,4 @@ header.m-0,
 `;
 
     output.value = css;
-});
-
-document.getElementById("copyBtn").addEventListener("click", () => {
-    output.select();
-    document.execCommand("copy");
 });
