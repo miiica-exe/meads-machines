@@ -1,33 +1,78 @@
-<div class="input-group">
-    <label for="bgColor">...</label>
-    <input type="text" id="bgColor" placeholder="#1a1a1a">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Machine</title>
+    <link rel="stylesheet" href="profile-maker.css">
+</head>
+<body>
+
+<h1>Profile CSS Generator</h1>
+
+<div class="form-section">
+
+    <label>
+        Background Color
+        <input
+            type="text"
+            id="bgColor"
+            placeholder="#1A1A1A">
+    </label>
     <div class="error" id="bgColorError"></div>
-</div>
 
-<div class="input-group">
-    <label for="bgImage">...</label>
-    <input type="text" id="bgImage" placeholder="https://example.com/image.jpg">
-    <div class="error" id="bgImageError"></div>
-</div>
+    <label>
+        OR Background Image URL
+        <input
+            type="text"
+            id="bgImage"
+            placeholder="https://example.com/image.jpg">
+    </label>
 
-<div class="input-group">
-    <label for="headerColor">...</label>
-    <input type="text" id="headerColor" placeholder="#2b2b2b">
+    <label>
+        Header Color
+        <input
+            type="text"
+            id="headerColor"
+            placeholder="#2B2B2B">
+    </label>
     <div class="error" id="headerColorError"></div>
-</div>
 
-<div class="input-group">
-    <label for="mainBoxColor">...</label>
-    <input type="text" id="mainBoxColor" placeholder="#333333">
+    <label>
+        Main Box Color
+        <input
+            type="text"
+            id="mainBoxColor"
+            placeholder="#333333">
+    </label>
     <div class="error" id="mainBoxColorError"></div>
-</div>
 
-<div class="input-group">
-    <label for="toolbarTextColor">...</label>
-    <input type="text" id="toolbarTextColor" placeholder="#ffffff">
+    <label>
+        Toolbar Text Color
+        <input
+            type="text"
+            id="toolbarTextColor"
+            placeholder="#FFFFFF">
+    </label>
     <div class="error" id="toolbarTextColorError"></div>
+
 </div>
 
-<button id="generateBtn">Generate CSS</button>
+<button id="generateBtn">
+    Generate CSS
+</button>
 
-<textarea id="output" readonly></textarea>
+<button id="copyBtn">
+    Copy CSS
+</button>
+
+<textarea
+    id="cssOutput"
+    rows="30"
+    readonly
+    placeholder="Generated CSS will appear here...">
+</textarea>
+
+<script src="profile-maker.js"></script>
+
+</body>
+</html>
