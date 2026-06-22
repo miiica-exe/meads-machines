@@ -148,7 +148,7 @@ header.m-0,
 
 .side-tools,
 .toolbar-window {
-    background-color: var(--main);
+    background: var(--main);
     color: var(--toolbar);
 }
 
