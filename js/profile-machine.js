@@ -155,42 +155,31 @@ header.m-0,
 
 /* MOBILE */
 @media only screen and (max-width: 512px) {
-
-    #mob-nav-btns .toolbar {
-        background: var(--main);
-    }
-
-    .toolbar-window.open {
-        background: none;
-        border: none;
-    }
-
+#mob-nav-btns .toolbar {
+    background: var(--header);
+    top: 3px !important;
+    right: 10% !important;
+}
+.toolbar-window.open {
+    background: none;
+    border: none;
+}
+  body {
     body {${bodyBg}
         background-repeat: no-repeat !important;
         background-position: center center !important;
         background-size: cover !important;
         background-attachment: fixed !important;
     }
-
-    .responsive #logo {
-        display: none !important;
+.responsive #logo {
+    display: none !important;
     }
-    
-.toolbar-window.open {
-   background: var(--header);
-   }
-
-    .responsive #header-logo-info {
-        background: var(--header) !important;
-    }
-
-    .col-12 section,
-    .bottom-box,
-    .panel,
-    .widget {
-        background: var(--main) !important;
-        border: none;
-    }
+  /* bottom boxes mobile */
+  .col-12 section, .bottom-box, .panel, .widget {
+    background: var(--main) !important; 
+    border: none;
+    color: var(--toolbar);
+  }
 }
 `;
 
