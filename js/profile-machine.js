@@ -150,18 +150,18 @@ header.m-0,
 .side-tools,
 .toolbar-window {
     background: var(--main);
-    color: var(--toolbar);
+    color: var(--toolbar) !important;
 }
 
 /* MOBILE */
 @media only screen and (max-width: 512px) {
 #mob-nav-btns .toolbar {
-    background: var(--header);
+    background: var(--header)!important;
     top: 3px !important;
     right: 10% !important;
 }
 .toolbar-window.open {
-    background: none;
+    background: none !important;
     border: none;
 }
   body {
