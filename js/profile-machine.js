@@ -155,32 +155,29 @@ header.m-0,
 
 /* MOBILE */
 @media only screen and (max-width: 512px) {
-#mob-nav-btns .toolbar {
-    background: var(--header)!important;
-    top: 3px !important;
-    right: 10% !important;
+body {
+${bodyBg}
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
 }
-.toolbar-window.open {
-    background: none !important;
-    border: none;
+  #mob-nav-btns, .toolbar, .toolbar-window.open {
+        background: var(--header)!important;
 }
-  body {
-    body {${bodyBg}
-        background-repeat: no-repeat !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-attachment: fixed !important;
+
+  .responsive #logo {
+        display: none !important;
     }
-.responsive #logo {
-    display: none !important;
-    }
-  /* bottom boxes mobile */
+    
+/* bottom boxes mobile */
   .col-12 section, .bottom-box, .panel, .widget {
-    background: var(--main) !important; 
-    border: none;
-    color: var(--toolbar);
+        background-color: var(--main) !important; 
+        border: none !important;
+        color: var(--toolbar)!important;
   }
 }
+
 `;
 
     output.value = css;
