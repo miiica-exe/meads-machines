@@ -137,7 +137,8 @@ body {${bodyBg}
 .no-margin,
 header.m-0,
 .menu,
-#header-nav {
+#header-nav,
+#profile-header {
     background: var(--header);
 }
 
