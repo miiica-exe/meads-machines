@@ -1,51 +1,12 @@
 function normalizeHex(value) {
     value = value.trim();
-
     if (!value) return "";
 
     if (!value.startsWith("#")) {
         value = "#" + value;
     }
 
-    return value.toUpperCase();
-}
-
-function isValidHex(value) {
-    return /^#[0-9A-F]{6}$/.test(value);
-}
-
-function validate(value, errorEl, name) {
-    errorEl.textContent = "";
-
-    if (!value) return true;
-
-    if (!isValidHex(value)) {
-        errorEl.textContent =
-            `❌ Error: ${name} must be a 6-digit hex code`;
-        return false;
-    }
-
-    return true;
-}
-function resolveBackground(value) {
-    value = value.trim();
-
-    if (!value) return { type: "none" };
-
-    // detect URL (image)
-    if (value.startsWith("http://") || value.startsWith("https://")) {
-        return {
-            type: "image",
-            value: value
-        };
-    }
-
-    // otherwise treat as hex
-    if (!value.startsWith("#")) {
-        value = "#" + value;
-    }
-
-    // expand shorthand #fff → #ffffff
+    // expand #fff → #ffffff
     if (value.length === 4) {
         value =
             "#" +
@@ -54,19 +15,58 @@ function resolveBackground(value) {
             value[3] + value[3];
     }
 
-    if (!/^#[0-9A-F]{6}$/i.test(value)) {
-        return {
-            type: "invalid",
-            value: value
-        };
+    return value.toUpperCase();
+}
+
+function isValidHex(value) {
+    return /^#[0-9A-F]{6}$/i.test(value);
+}
+
+function validate(value, errorEl, name) {
+    errorEl.textContent = "";
+
+    if (!value) return true;
+
+    if (!isValidHex(value)) {
+        errorEl.textContent = `❌ Error: ${name} must be a 6-digit hex code`;
+        return false;
     }
 
-    return {
-        type: "color",
-        value: value.toUpperCase()
-    };
+    return true;
 }
-const bg = resolveBackground(bgColorEl.value);
+
+function resolveBackground(value) {
+    value = value.trim();
+
+    if (!value) return { type: "none" };
+
+    // URL = image background
+    if (value.startsWith("http://") || value.startsWith("https://")) {
+        return { type: "image", value };
+    }
+
+    // HEX fallback
+    if (!value.startsWith("#")) {
+        value = "#" + value;
+    }
+
+    if (value.length === 4) {
+        value =
+            "#" +
+            value[1] + value[1] +
+            value[2] + value[2] +
+            value[3] + value[3];
+    }
+
+    if (!isValidHex(value)) {
+        return { type: "invalid", value };
+    }
+
+    return { type: "color", value: value.toUpperCase() };
+}
+
+// DOM
+const bgColorEl = document.getElementById("bgColor");
 const headerEl = document.getElementById("headerColor");
 const mainEl = document.getElementById("mainBoxColor");
 const toolbarEl = document.getElementById("toolbarTextColor");
@@ -76,49 +76,52 @@ const output = document.getElementById("cssOutput");
 document.getElementById("generateBtn").addEventListener("click", () => {
 
     const bg = resolveBackground(bgColorEl.value);
+
     const header = normalizeHex(headerEl.value);
     const main = normalizeHex(mainEl.value);
     const toolbar = normalizeHex(toolbarEl.value);
 
     let ok = true;
 
+    // background validation (special case)
+    const bgError = document.getElementById("bgColorError");
+
+    if (bg.type === "invalid") {
+        bgError.textContent = "❌ Background must be hex or image URL";
+        ok = false;
+    } else {
+        bgError.textContent = "";
+    }
+
     ok =
-    validate(bgColor, document.getElementById("bgColorError"), "Background") &&
-    validate(header, document.getElementById("headerColorError"), "Header") &&
-    validate(main, document.getElementById("mainBoxColorError"), "Main box") &&
-    validate(toolbar, document.getElementById("toolbarTextColorError"), "Toolbar");
+        validate(header, document.getElementById("headerColorError"), "Header") &&
+        validate(main, document.getElementById("mainBoxColorError"), "Main box") &&
+        validate(toolbar, document.getElementById("toolbarTextColorError"), "Toolbar") &&
+        ok;
 
     if (!ok) return;
 
+    // background builder (SINGLE SOURCE OF TRUTH)
     let bodyBg = "";
 
-if (bg.type === "image") {
-    bodyBg = `
+    if (bg.type === "image") {
+        bodyBg = `
     background-image: url("${bg.value}");
     background-size: cover;
     background-attachment: fixed;`;
-}
-
-else if (bg.type === "color") {
-    bodyBg = `
-    background-color: ${bg.value};`;
-}
-
-else {
-    bodyBg = `
-    background-color: #111111;`;
-}
-
-    if (bgImage) {
-        bodyBg = `
-    background-image: url("${bgImage}");
-    background-size: cover;
-    background-attachment: fixed;`;
-    } else {
-        bodyBg = `
-    background-color: ${bgColor};`;
     }
 
+    else if (bg.type === "color") {
+        bodyBg = `
+    background-color: ${bg.value};`;
+    }
+
+    else {
+        bodyBg = `
+    background-color: #111111;`;
+    }
+
+    // FINAL CSS
     const css = `
 :root {
     --header: ${header};
@@ -130,10 +133,7 @@ body {${bodyBg}
     color: var(--toolbar);
 }
 
-/* =========================
-   DESKTOP
-========================= */
-
+/* DESKTOP */
 .no-margin,
 header.m-0,
 .menu,
@@ -152,10 +152,7 @@ header.m-0,
     color: var(--toolbar);
 }
 
-/* =========================
-   MOBILE OVERRIDES
-========================= */
-
+/* MOBILE */
 @media only screen and (max-width: 512px) {
 
     #mob-nav-btns .toolbar {
@@ -167,11 +164,7 @@ header.m-0,
         border: none;
     }
 
-    body {${bgImage ? `
-        background-image: url("${bgImage}") !important;
-` : `
-        background-color: ${bgColor} !important;
-`}
+    body {${bodyBg}
         background-repeat: no-repeat !important;
         background-position: center center !important;
         background-size: cover !important;
