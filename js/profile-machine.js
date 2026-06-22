@@ -138,7 +138,8 @@ body {${bodyBg}
 header.m-0,
 .menu,
 #header-nav,
-#profile-header {
+#profile-header,
+.toolbar-window.open {
     background: var(--header);
 }
 
