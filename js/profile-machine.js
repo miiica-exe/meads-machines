@@ -106,19 +106,19 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
     if (bg.type === "image") {
         bodyBg = `
-    background-image: url("${bg.value}");
+    background: url("${bg.value}");
     background-size: cover;
     background-attachment: fixed;`;
     }
 
     else if (bg.type === "color") {
         bodyBg = `
-    background-color: ${bg.value};`;
+    background: ${bg.value};`;
     }
 
     else {
         bodyBg = `
-    background-color: #111111;`;
+    background: #111111;`;
     }
 
     // FINAL CSS
@@ -138,12 +138,12 @@ body {${bodyBg}
 header.m-0,
 .menu,
 #header-nav {
-    background-color: var(--header);
+    background: var(--header);
 }
 
 .col-12 section,
 .modal-dialog {
-    background-color: var(--main);
+    background: var(--main);
 }
 
 .side-tools,
@@ -183,7 +183,7 @@ header.m-0,
     .bottom-box,
     .panel,
     .widget {
-        background-color: var(--main) !important;
+        background: var(--main) !important;
         border: none;
     }
 }
