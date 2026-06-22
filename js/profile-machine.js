@@ -27,9 +27,46 @@ function validate(value, errorEl, name) {
 
     return true;
 }
+function resolveBackground(value) {
+    value = value.trim();
 
-const bgColorEl = document.getElementById("bgColor");
-const bgImageEl = document.getElementById("bgImage");
+    if (!value) return { type: "none" };
+
+    // detect URL (image)
+    if (value.startsWith("http://") || value.startsWith("https://")) {
+        return {
+            type: "image",
+            value: value
+        };
+    }
+
+    // otherwise treat as hex
+    if (!value.startsWith("#")) {
+        value = "#" + value;
+    }
+
+    // expand shorthand #fff → #ffffff
+    if (value.length === 4) {
+        value =
+            "#" +
+            value[1] + value[1] +
+            value[2] + value[2] +
+            value[3] + value[3];
+    }
+
+    if (!/^#[0-9A-F]{6}$/i.test(value)) {
+        return {
+            type: "invalid",
+            value: value
+        };
+    }
+
+    return {
+        type: "color",
+        value: value.toUpperCase()
+    };
+}
+const bg = resolveBackground(bgColorEl.value);
 const headerEl = document.getElementById("headerColor");
 const mainEl = document.getElementById("mainBoxColor");
 const toolbarEl = document.getElementById("toolbarTextColor");
@@ -38,8 +75,7 @@ const output = document.getElementById("cssOutput");
 
 document.getElementById("generateBtn").addEventListener("click", () => {
 
-    const bgColor = normalizeHex(bgColorEl.value);
-    const bgImage = bgImageEl.value.trim();
+    const bg = resolveBackground(bgColorEl.value);
     const header = normalizeHex(headerEl.value);
     const main = normalizeHex(mainEl.value);
     const toolbar = normalizeHex(toolbarEl.value);
@@ -55,6 +91,23 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!ok) return;
 
     let bodyBg = "";
+
+if (bg.type === "image") {
+    bodyBg = `
+    background-image: url("${bg.value}");
+    background-size: cover;
+    background-attachment: fixed;`;
+}
+
+else if (bg.type === "color") {
+    bodyBg = `
+    background-color: ${bg.value};`;
+}
+
+else {
+    bodyBg = `
+    background-color: #111111;`;
+}
 
     if (bgImage) {
         bodyBg = `
