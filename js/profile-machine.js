@@ -77,6 +77,10 @@ body {${bodyBg}
     color: var(--toolbar);
 }
 
+/* =========================
+   DESKTOP
+========================= */
+
 .no-margin,
 header.m-0,
 .menu,
@@ -93,6 +97,49 @@ header.m-0,
 .toolbar-window {
     background-color: var(--main);
     color: var(--toolbar);
+}
+
+/* =========================
+   MOBILE OVERRIDES
+========================= */
+
+@media only screen and (max-width: 512px) {
+
+    #mob-nav-btns .toolbar {
+        background: var(--main);
+    }
+
+    .toolbar-window.open {
+        background: none;
+        border: none;
+    }
+
+    body {${bgImage ? `
+        background-image: url("${bgImage}") !important;
+` : `
+        background-color: ${bgColor} !important;
+`}
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-attachment: fixed !important;
+    }
+
+    .responsive #logo {
+        display: none !important;
+    }
+
+    .responsive #header-logo-info {
+        background: var(--header) !important;
+    }
+
+    .col-12 section,
+    .bottom-box,
+    .panel,
+    .widget {
+        background-color: var(--main) !important;
+        border: none;
+    }
 }
 `;
 
