@@ -138,8 +138,7 @@ body {${bodyBg}
 header.m-0,
 .menu,
 #header-nav,
-#profile-header,
-.toolbar-window.open {
+#profile-header {
     background: var(--header);
 }
 
@@ -176,6 +175,10 @@ header.m-0,
     .responsive #logo {
         display: none !important;
     }
+    
+.toolbar-window.open {
+   background: var(--header);
+   }
 
     .responsive #header-logo-info {
         background: var(--header) !important;
