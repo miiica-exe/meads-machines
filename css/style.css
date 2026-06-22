@@ -128,3 +128,10 @@ th, td {
   display: flex;
   flex-direction: column;
 }
+
+#cssOutput{
+    margin-top: 20px;
+    background: black;
+    width: 99%;
+    border-radius: 10px;
+}
