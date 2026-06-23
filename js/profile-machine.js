@@ -1,184 +1,155 @@
+const VARIABLES = [
+    "body-bg",
+    "bg-main",
+    "bg-accent",
+    "text-color",
+    "text-accent"
+];
+
+const output = document.getElementById("output");
+const generateBtn = document.getElementById("generate-btn");
+
+/**
+ * Converts:
+ * fff      -> #ffffff
+ * abc      -> #aabbcc
+ * FFFFFF   -> #ffffff
+ * #fff     -> #ffffff
+ * #ABCDEF  -> #abcdef
+ */
 function normalizeHex(value) {
-    value = value.trim();
     if (!value) return "";
 
-    if (!value.startsWith("#")) {
-        value = "#" + value;
+    let hex = value.trim();
+
+    if (hex.startsWith("#")) {
+        hex = hex.slice(1);
     }
 
-    // expand #fff → #ffffff
-    if (value.length === 4) {
-        value =
-            "#" +
-            value[1] + value[1] +
-            value[2] + value[2] +
-            value[3] + value[3];
+    if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+        hex = hex
+            .split("")
+            .map(char => char + char)
+            .join("");
     }
 
-    return value.toUpperCase();
-}
-
-function isValidHex(value) {
-    return /^#[0-9A-F]{6}$/i.test(value);
-}
-
-function validate(value, errorEl, name) {
-    errorEl.textContent = "";
-
-    if (!value) return true;
-
-    if (!isValidHex(value)) {
-        errorEl.textContent = `❌ Error: ${name} must be a 6-digit hex code`;
-        return false;
+    if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+        return "#" + hex.toLowerCase();
     }
 
-    return true;
+    return value.trim();
 }
 
-function resolveBackground(value) {
-    value = value.trim();
+/**
+ * Body BG accepts either:
+ * - hex colors
+ * - URLs
+ */
+function normalizeBodyBg(value) {
+    const trimmed = value.trim();
 
-    if (!value) return { type: "none" };
+    if (!trimmed) return "";
 
-    // URL = image background
-    if (value.startsWith("http://") || value.startsWith("https://")) {
-        return { type: "image", value };
+    const isUrl =
+        trimmed.startsWith("http://") ||
+        trimmed.startsWith("https://");
+
+    if (isUrl) {
+        return `url("${trimmed}")`;
     }
 
-    // HEX fallback
-    if (!value.startsWith("#")) {
-        value = "#" + value;
-    }
-
-    if (value.length === 4) {
-        value =
-            "#" +
-            value[1] + value[1] +
-            value[2] + value[2] +
-            value[3] + value[3];
-    }
-
-    if (!isValidHex(value)) {
-        return { type: "invalid", value };
-    }
-
-    return { type: "color", value: value.toUpperCase() };
+    return normalizeHex(trimmed);
 }
 
-// DOM
-const bgColorEl = document.getElementById("bgColor");
-const headerEl = document.getElementById("headerColor");
-const mainEl = document.getElementById("mainBoxColor");
-const toolbarEl = document.getElementById("toolbarTextColor");
+function generateVariables() {
+    const values = {};
 
-const output = document.getElementById("cssOutput");
+    VARIABLES.forEach(variable => {
+        const field = document.getElementById(variable);
 
-document.getElementById("generateBtn").addEventListener("click", () => {
+        if (!field) return;
 
-    const bg = resolveBackground(bgColorEl.value);
+        let value = field.value;
 
-    const header = normalizeHex(headerEl.value);
-    const main = normalizeHex(mainEl.value);
-    const toolbar = normalizeHex(toolbarEl.value);
+        if (variable === "body-bg") {
+            value = normalizeBodyBg(value);
+        } else {
+            value = normalizeHex(value);
+        }
 
-    let ok = true;
+        values[variable] = value;
+    });
 
-    // background validation (special case)
-    const bgError = document.getElementById("bgColorError");
+    let css = `:root {\n`;
 
-    if (bg.type === "invalid") {
-        bgError.textContent = "❌ Background must be hex or image URL";
-        ok = false;
-    } else {
-        bgError.textContent = "";
-    }
+    VARIABLES.forEach(variable => {
+        css += `  --${variable}: ${values[variable]};\n`;
+    });
 
-    ok =
-        validate(header, document.getElementById("headerColorError"), "Header") &&
-        validate(main, document.getElementById("mainBoxColorError"), "Main box") &&
-        validate(toolbar, document.getElementById("toolbarTextColorError"), "Toolbar") &&
-        ok;
-
-    if (!ok) return;
-
-    // background builder (SINGLE SOURCE OF TRUTH)
-    let bodyBg = "";
-
-    if (bg.type === "image") {
-        bodyBg = `
-    background: url("${bg.value}");
-    background-size: cover;
-    background-attachment: fixed;`;
-    }
-
-    else if (bg.type === "color") {
-        bodyBg = `
-    background: ${bg.value};`;
-    }
-
-    else {
-        bodyBg = `
-    background: #111111;`;
-    }
-
-    // FINAL CSS
-    const css = `
-:root {
-    --header: ${header};
-    --main: ${main};
-    --toolbar: ${toolbar};
-}
-
-body {${bodyBg}
-    color: var(--toolbar);
-}
-
-/* DESKTOP */
-.no-margin,
-header.m-0,
-.menu,
-#header-nav,
-#profile-header {
-    background: var(--header);
-}
-
-.col-12 section,
-.modal-dialog {
-    background: var(--main);
-}
-
-.side-tools,
-.toolbar-window {
-    background: var(--main);
-    color: var(--toolbar) !important;
-}
-
-/* MOBILE */
-@media only screen and (max-width: 512px) {
-body {
-${bodyBg}
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    background-size: cover !important;
-    background-attachment: fixed !important;
-}
-  #mob-nav-btns, .toolbar, .toolbar-window.open {
-        background: var(--header)!important;
-}
-
-  .responsive #logo {
-        display: none !important;
-    }
-    
-/* bottom boxes mobile */
-  .col-12 section, .bottom-box, .panel, .widget {
-        background-color: var(--main) !important; 
-        border: none !important;
-        color: var(--toolbar)!important;
-  }
-}
-
-`;
+    css += `}`;
 
     output.value = css;
+}
+
+generateBtn.addEventListener("click", generateVariables);
+
+function applyToRoot(variable, value) {
+    document.documentElement.style.setProperty(`--${variable}`, value);
+}
+
+function bindColorPickers() {
+    document.querySelectorAll('input[type="color"]').forEach(picker => {
+        picker.addEventListener("input", () => {
+            const target = document.getElementById(picker.dataset.target);
+
+            target.value = picker.value;
+
+            const variable = picker.dataset.target;
+
+            let value = picker.value;
+
+            if (variable === "body-bg") {
+                value = normalizeBodyBg(value);
+            }
+
+            applyToRoot(variable, value);
+        });
+    });
+}
+
+VARIABLES.forEach(variable => {
+    const input = document.getElementById(variable);
+
+    if (!input) return;
+
+    input.addEventListener("input", () => {
+        let value = input.value;
+
+        if (variable === "body-bg") {
+            value = normalizeBodyBg(value);
+        } else {
+            value = normalizeHex(value);
+        }
+
+        applyToRoot(variable, value);
+    });
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    VARIABLES.forEach(variable => {
+        const input = document.getElementById(variable);
+        if (!input) return;
+
+        let value = input.value;
+
+        if (variable === "body-bg") {
+            value = normalizeBodyBg(value);
+        } else {
+            value = normalizeHex(value);
+        }
+
+        applyToRoot(variable, value);
+    });
+
+    bindColorPickers();
 });
