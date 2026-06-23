@@ -3,64 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile Machine</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <script defer src="js/profile-machine.js"></script>
 </head>
 <body>
 
-<h1>Profile CSS Generator</h1>
+    <h1>Profile Machine</h1>
 
-<div class="form-section">
+    <form id="generator-form">
 
-    <label>
-        Background Color
-        <input
-            type="text"
-            id="bgColor"
-            placeholder="#1A1A1A">
-    </label>
-    <div class="error" id="bgColorError"></div>
+        <div>
+            <label for="body-bg">Body Background</label>
+            <input
+                type="text"
+                id="body-bg"
+                placeholder="hex or url">
+            <input
+                type="color"
+                data-target="body-bg"
+                value="#000000"
+            >
+        </div>
 
-    <label>
-        Header Color
-        <input
-            type="text"
-            id="headerColor"
-            placeholder="#2B2B2B">
-    </label>
-    <div class="error" id="headerColorError"></div>
+        <div>
+            <label for="bg-main">Main Background</label>
+            <input
+                type="text"
+                id="bg-main"
+                placeholder="#222222">
+            <input
+                type="color"
+                data-target="bg-main"
+                value="#000000"
+            >
+        </div>
 
-    <label>
-        Main Box Color
-        <input
-            type="text"
-            id="mainBoxColor"
-            placeholder="#333333">
-    </label>
-    <div class="error" id="mainBoxColorError"></div>
+        <div>
+            <label for="bg-accent">Accent Background</label>
+            <input
+                type="text"
+                id="bg-accent"
+                placeholder="#444444">
+            <input
+                type="color"
+                data-target="bg-accent"
+                value="#000000"
+            >
+        </div>
 
-    <label>
-        Toolbar Text Color
-        <input
-            type="text"
-            id="toolbarTextColor"
-            placeholder="#FFFFFF">
-    </label>
-    <div class="error" id="toolbarTextColorError"></div>
+        <div>
+            <label for="text-color">Text Color</label>
+            <input
+                type="text"
+                id="text-color"
+                placeholder="#ffffff">
+            <input
+                type="color"
+                data-target="text-color"
+                value="#000000"
+            >
+        </div>
 
-</div>
+        <div>
+            <label for="text-accent">Text Accent Color</label>
+            <input
+                type="text"
+                id="text-accent"
+                placeholder="#cccccc">
+            <input
+                type="color"
+                data-target="text-accent"
+                value="#000000"
+            >
+        </div>
 
-<button id="generateBtn">
-    Generate CSS
-</button>
+        <button type="button" id="generate-btn">
+            Generate CSS
+        </button>
 
-<textarea
-    id="cssOutput"
-    rows="30"
-    readonly
-    placeholder="Generated CSS will appear here...">
-</textarea>
-    
-<script src="js/profile-machine.js"></script>
+    </form>
+
+    <hr>
+
+    <h2>Generated Variables</h2>
+
+    <textarea
+        id="output"
+        rows="12"
+        cols="80"
+        readonly
+    ></textarea>
 
 </body>
 </html>
