@@ -150,36 +150,33 @@ th, td {
     min-width: 300px;
 }
 
-/* RIGHT SIDE (preview) */
-.profile-preview {
+.profile-header {
     flex: 1;
-    min-width: 300px;
+    background: var(--bg-accent);
+}
+
+.greeting-header {
+    flex: 1;
+    background: var(--bg-accent);
+}
+
+.profile-info {
+    flex: 1;
+    background: var(--bg-main);
+}
+
+.greeting {
+    flax: 1;
+    background: var(--bg-main);
 }
 
 /* INNER PREVIEW WRAPPER */
 .preview-frame {
     background: var(--body-bg);
-    padding: 12px;
+    margin-top: 25px;
+    padding-top: 12px;
     display: flex;
     gap: 10px;
-}
-
-/* EACH BOX */
-.preview-panel {
-    flex: 1;
-    background: var(--bg-main);
-    color: var(--text-color);
-}
-
-/* HEADER BOXES */
-.preview-header {
-    background: var(--bg-accent);
-    color: var(--text-accent);
-    padding: 6px;
-    font-weight: bold;
-}
-
-/* BODY TEXT */
-.preview-body {
-    padding: 8px;
+    border-radius: 5px;
+    height: 270px;
 }
