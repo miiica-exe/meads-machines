@@ -7,9 +7,31 @@
     <script defer src="js/profile-machine.js"></script>
 </head>
 <body>
-
-    <h1>Profile Machine</h1>
-
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <a href="value-machine.html">Value Machine</a>
+  <a href="money-machine.html">Money Machine</a>
+  <a href="ethereal-machine.html">Ethereal Machine</a>
+  <a href="profile-machine.html">Profile Machine</a>
+</nav>
+    
+    <h1>Profile CSS generator</h1>
+<div class="box">
+  <p>Ever wanted a custom profile, but couldn't spare the time to learn to code? This is for you! <br>
+  You can fil in the fields with hex codes. If you don't have experience with them, I find Color-Hex is a great resource. <br>
+      https://www.color-hex.com/<br> You can also use the color selectors to the right of each field.<br>
+  <b>Instructions:</b><br>
+  -<b>Body Background is the big background, usually where images go</b><br>
+  Input a https image url, or a hex code.<br>
+  -<b>Box Background is for your greeting, signatre, etc backgrounds.</b><br>
+  -<b>Accent Background is the title boxes and a few accent colors around the profile.</b><br>
+  -<b>Text Color is the main text color of your profile.</b>
+  -<b>Text Accent is the color for links and other accents.</b><br><br>
+  This was a weekend project by a Xanje player, and is in no way a part of Xanje itself. <br>
+  It is up to you to choose mild colors and contrasting text so that others with certain visual or sensory issues 
+  can still read your profile, without headaches or seizure risks. <br> This includes avoiding very bright colors, 
+  texts that are similar to the background color, or flashing images. <br> Font control and borders were intentionaly
+  left out to avoid abuse of unreadable changes. I offer profile making services if you want additional changes.</p>
     <form id="generator-form">
 
         <div>
@@ -21,20 +43,20 @@
             <input
                 type="color"
                 data-target="body-bg"
-                value="#000000"
+                value="#ffb3ba"
             >
         </div>
 
         <div>
-            <label for="bg-main">Main Background</label>
+            <label for="bg-main">Boxes Background</label>
             <input
                 type="text"
                 id="bg-main"
-                placeholder="#222222">
+                placeholder="greeting, signature, etc">
             <input
                 type="color"
                 data-target="bg-main"
-                value="#000000"
+                value="#ffdfba"
             >
         </div>
 
@@ -43,11 +65,11 @@
             <input
                 type="text"
                 id="bg-accent"
-                placeholder="#444444">
+                placeholder="title boxes, etc">
             <input
                 type="color"
                 data-target="bg-accent"
-                value="#000000"
+                value="#ffffba"
             >
         </div>
 
@@ -56,11 +78,11 @@
             <input
                 type="text"
                 id="text-color"
-                placeholder="#ffffff">
+                placeholder="keep it readable">
             <input
                 type="color"
                 data-target="text-color"
-                value="#000000"
+                value="#baffc9"
             >
         </div>
 
@@ -69,13 +91,14 @@
             <input
                 type="text"
                 id="text-accent"
-                placeholder="#cccccc">
+                placeholder="highlights and links">
             <input
                 type="color"
                 data-target="text-accent"
-                value="#000000"
+                value="#bae1ff"
             >
         </div>
+</div>
 
         <button type="button" id="generate-btn">
             Generate CSS
