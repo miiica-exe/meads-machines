@@ -9,14 +9,10 @@ const VARIABLES = [
 const output = document.getElementById("output");
 const generateBtn = document.getElementById("generate-btn");
 
-/**
- * Converts:
- * fff      -> #ffffff
- * abc      -> #aabbcc
- * FFFFFF   -> #ffffff
- * #fff     -> #ffffff
- * #ABCDEF  -> #abcdef
- */
+/* ---------------------------
+   NORMALIZERS
+--------------------------- */
+
 function normalizeHex(value) {
     if (!value) return "";
 
@@ -27,10 +23,7 @@ function normalizeHex(value) {
     }
 
     if (/^[0-9a-fA-F]{3}$/.test(hex)) {
-        hex = hex
-            .split("")
-            .map(char => char + char)
-            .join("");
+        hex = hex.split("").map(c => c + c).join("");
     }
 
     if (/^[0-9a-fA-F]{6}$/.test(hex)) {
@@ -40,14 +33,8 @@ function normalizeHex(value) {
     return value.trim();
 }
 
-/**
- * Body BG accepts either:
- * - hex colors
- * - URLs
- */
 function normalizeBodyBg(value) {
     const trimmed = value.trim();
-
     if (!trimmed) return "";
 
     const isUrl =
@@ -61,29 +48,81 @@ function normalizeBodyBg(value) {
     return normalizeHex(trimmed);
 }
 
+/* ---------------------------
+   CORE APPLY FUNCTION
+--------------------------- */
+
+function applyToRoot(variable, value) {
+    document.documentElement.style.setProperty(`--${variable}`, value);
+}
+
+/* ---------------------------
+   LIVE INPUT SYSTEM
+--------------------------- */
+
+function handleInput(variable, value) {
+    if (variable === "body-bg") {
+        return normalizeBodyBg(value);
+    }
+    return normalizeHex(value);
+}
+
+/* text inputs */
+function bindTextInputs() {
+    VARIABLES.forEach(variable => {
+        const input = document.getElementById(variable);
+        if (!input) {
+            console.warn(`Missing input: ${variable}`);
+            return;
+        }
+
+        input.addEventListener("input", () => {
+            const value = handleInput(variable, input.value);
+
+            applyToRoot(variable, value);
+        });
+    });
+}
+
+/* color pickers */
+function bindColorPickers() {
+    document.querySelectorAll('input[type="color"]').forEach(picker => {
+        picker.addEventListener("input", () => {
+            const targetId = picker.dataset.target;
+            const target = document.getElementById(targetId);
+
+            if (!target) return;
+
+            let value = picker.value;
+
+            if (targetId === "body-bg") {
+                value = normalizeBodyBg(value);
+            }
+
+            target.value = value;
+            applyToRoot(targetId, value);
+        });
+    });
+}
+
+/* ---------------------------
+   GENERATOR (EXPORT ONLY)
+--------------------------- */
+
 function generateVariables() {
     const values = {};
 
     VARIABLES.forEach(variable => {
         const field = document.getElementById(variable);
-
         if (!field) return;
 
-        let value = field.value;
-
-        if (variable === "body-bg") {
-            value = normalizeBodyBg(value);
-        } else {
-            value = normalizeHex(value);
-        }
-
-        values[variable] = value;
+        values[variable] = handleInput(variable, field.value);
     });
 
     let css = `:root {\n`;
 
     VARIABLES.forEach(variable => {
-        css += `  --${variable}: ${values[variable]};\n`;
+        css += `  --${variable}: ${values[variable] || ""};\n`;
     });
 
     css += `}`;
@@ -91,65 +130,22 @@ function generateVariables() {
     output.value = css;
 }
 
+/* ---------------------------
+   INIT
+--------------------------- */
+
 generateBtn.addEventListener("click", generateVariables);
 
-function applyToRoot(variable, value) {
-    document.documentElement.style.setProperty(`--${variable}`, value);
-}
-
-function bindColorPickers() {
-    document.querySelectorAll('input[type="color"]').forEach(picker => {
-        picker.addEventListener("input", () => {
-            const target = document.getElementById(picker.dataset.target);
-
-            target.value = picker.value;
-
-            const variable = picker.dataset.target;
-
-            let value = picker.value;
-
-            if (variable === "body-bg") {
-                value = normalizeBodyBg(value);
-            }
-
-            applyToRoot(variable, value);
-        });
-    });
-}
-
-VARIABLES.forEach(variable => {
-    const input = document.getElementById(variable);
-
-    if (!input) return;
-
-    input.addEventListener("input", () => {
-        let value = input.value;
-
-        if (variable === "body-bg") {
-            value = normalizeBodyBg(value);
-        } else {
-            value = normalizeHex(value);
-        }
-
-        applyToRoot(variable, value);
-    });
-});
-
 window.addEventListener("DOMContentLoaded", () => {
+    bindTextInputs();
+    bindColorPickers();
+
+    // initial sync into CSS variables
     VARIABLES.forEach(variable => {
         const input = document.getElementById(variable);
         if (!input) return;
 
-        let value = input.value;
-
-        if (variable === "body-bg") {
-            value = normalizeBodyBg(value);
-        } else {
-            value = normalizeHex(value);
-        }
-
+        const value = handleInput(variable, input.value);
         applyToRoot(variable, value);
     });
-
-    bindColorPickers();
 });
