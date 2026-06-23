@@ -1,20 +1,7 @@
 const CSS_TEMPLATE = `
-:root {
-  /* === Backgrounds === */
-  --body-bg: ;   /* url or color */
-  --bg-main: ;   /* bottom boxes, greeting, etc */
-  --bg-accent: ;    /* title boxes, accent bgs */
-
-  /* === Text Colors === */
-  --text-color: ;    /* default readable text */
-  --text-accent: ;    /* lighter hover highlight */
-  
-  /* some event overrides */
-  --xanje-color-c: rgba(0, 0, 0, 0.1);
-  --xanje-color-text: var(--text-accent);
-}
-/* MADE BY ~MIIICA VIA PROFILE MACHINE */
-/* TESTING CENTER */
+/* MADE BY ~MIIICA VIA PROFILE MACHINE 
+https://miiica-exe.github.io/meads-machines/profile-machine.html */
+/* TESTING AREA, IF YOU HAVE NEW CODES TO ADD */
 
 /* =========================================================
    SECTION: GLOBAL / BASE STYLES
