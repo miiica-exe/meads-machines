@@ -1,4 +1,5 @@
 const CSS_TEMPLATE = `
+
 /* MADE BY ~MIIICA VIA PROFILE MACHINE 
 https://miiica-exe.github.io/meads-machines/profile-machine.html */
 /* TESTING AREA, IF YOU HAVE NEW CODES TO ADD */
@@ -18,16 +19,18 @@ body {
 #header-logo-info, #profile-header, #battle-status {
     display: none;
 }
-#footer {
-    color: var(--text-color);
-}
 
 #top-buttons-contain {
     background: var(--bg-accent) !important;
+    z-index:0;
 }
 #top-buttons-contain>div {
     background: none;
 }
+.coin-balance, #coin-balance-top, .unread-link {
+    display: none !important;
+}
+
 /* customize profile etc */
 .text-center {
     background: none;
@@ -90,8 +93,8 @@ a, a:link, a:visited, [role=link], a {
 /* change the menu - pets, forums, etc */
 .menu, #header-nav.menu, #header-nav {
     position: fixed;
-    top: 0;
-    z-index: 1000;
+    z-index:1000;
+    top: -.5%!important;
     text-align: left;
     background: none;
     border: none;
@@ -304,7 +307,7 @@ audio:hover {
    ========================================================= */
 @media only screen and (max-width: 512px) {
 #mob-nav-btns .toolbar {
-    background: var(--bg-accent);
+    background: var(--bg-accent) !important;
     top: 3px !important;
     right: 10% !important;
 }
@@ -313,7 +316,7 @@ audio:hover {
     border: none;
 }
   body {
-    background: var(--body-bg);
+    background: var(--body-bg) !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
     background-size: cover !important;
@@ -332,7 +335,6 @@ audio:hover {
 
 /*CODE BY ~MIIICA
 PHOTOS, SUCH AS BACKGROUNDS, BADGES, ETC COME FROM XANJE OR FREE-TO-USE SOURCES, I DO NOT CREATE THEM*/
-
 `;
 
 const VARIABLES = [
