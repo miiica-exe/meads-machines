@@ -129,7 +129,7 @@ th, td {
   flex-direction: column;
 }
 
-#cssOutput{
+#output{
     color: #b8b8b8;
     margin-top: 20px;
     background: black;
