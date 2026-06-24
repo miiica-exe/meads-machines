@@ -189,6 +189,8 @@ th, td {
 /* INNER PREVIEW WRAPPER */
 .preview-frame {
     background: var(--body-bg);
+    background-size: cover;
+    background-position: center;
     margin-top: 25px;
     padding-top: 12px;
     display: flex;
